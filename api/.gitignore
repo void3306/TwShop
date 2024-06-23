@@ -31,5 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-vue-app/node_modules/
