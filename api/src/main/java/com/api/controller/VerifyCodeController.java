@@ -27,6 +27,11 @@ public class VerifyCodeController {
     @Resource
     UserSessionUtil userSessionUtil;
 
+    /**
+     * 验证码接口
+     * @return
+     * @throws IOException
+     */
     @GetMapping("/captcha")
     public HashMap<String, String> captcha() throws IOException {
 

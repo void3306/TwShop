@@ -6,7 +6,6 @@ import com.api.model.vo.ResultVo;
 import com.api.service.UserService;
 import com.api.session.UserSessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,7 +19,7 @@ public class UserController {
 
     @Resource
     private UserService userService;
-    @Autowired
+    @Resource
     private UserSessionUtil userSessionUtil;
 
     @GetMapping("/list")

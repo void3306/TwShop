@@ -12,6 +12,12 @@ public interface UserService {
      */
     User getUser(Long id);
 
+    /**
+     * 用户登录
+     * @param username
+     * @param password
+     * @return
+     */
     User login(String username, String password);
 
 

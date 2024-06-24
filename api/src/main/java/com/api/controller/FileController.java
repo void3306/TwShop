@@ -10,6 +10,12 @@ import java.io.*;
 @CrossOrigin
 public class FileController {
 
+    /**
+     * 图片获取
+     * @param imgName
+     * @param response
+     * @throws IOException
+     */
     @GetMapping("/image")
     public void getImg(@RequestParam("imgName") String imgName, HttpServletResponse response) throws IOException {
         File fileDir = new File(PathUtils.getClassLoadRootPath() + "/pic");
