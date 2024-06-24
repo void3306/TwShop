@@ -12,5 +12,7 @@ public interface UserService {
      */
     User getUser(Long id);
 
+    User login(String username, String password);
+
 
 }

@@ -2,6 +2,8 @@ package com.api.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.api.common.enums.ErrorMsg;
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -12,34 +14,14 @@ import com.api.common.enums.ErrorMsg;
  */
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
+@Getter
+@Setter
 public class ResultVo<T> {
     private Integer status_code;
     private String  msg;
     private T  data;
 
-    public Integer getStatus_code() {
-        return status_code;
-    }
 
-    public void setStatus_code(Integer status_code) {
-        this.status_code = status_code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 
     //直接返回成功状态码
     public static  ResultVo success(){
@@ -65,15 +47,10 @@ public class ResultVo<T> {
 
     //直接返回成功状态码
     public static  ResultVo fail(ErrorMsg errorMsg){
-
         ResultVo resultVo = new ResultVo();
-
         resultVo.setStatus_code(0);
-
         resultVo.setMsg(errorMsg.getMsg());
-
         return  resultVo;
-
     }
 
     //返回成功状态码的同时返回对象
@@ -86,10 +63,23 @@ public class ResultVo<T> {
         return  resultVo;
     }
 
+    public static ResultVo error(Integer status_code, String msg){
+        return new ResultVo<>(status_code, msg);
+    }
+
+    public static <T>ResultVo error(Integer status_code, String msg, T data){
+        return new ResultVo<>(status_code, msg, data);
+    }
+
     public ResultVo(Integer status_code, String msg, T data) {
         this.status_code = status_code;
         this.msg = msg;
         this.data = data;
+    }
+
+    public ResultVo(Integer status_code, String msg) {
+        this.status_code = status_code;
+        this.msg = msg;
     }
 
     public ResultVo() {
