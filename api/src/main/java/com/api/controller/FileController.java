@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
-@RestController
 @CrossOrigin
+@RestController
 public class FileController {
 
     /**
@@ -17,8 +17,8 @@ public class FileController {
      * @throws IOException
      */
     @GetMapping("/image")
-    public void getImg(@RequestParam("imgName") String imgName, HttpServletResponse response) throws IOException {
-        File fileDir = new File(PathUtils.getClassLoadRootPath() + "/pic");
+    public void getImg(@RequestParam("imageName") String imgName, HttpServletResponse response) throws IOException {
+        File fileDir = new File(PathUtils.getClassLoadRootPath() + "/images");
         File image = new File(fileDir.getAbsolutePath()+"/"+imgName);
         if (image.exists()){
             FileInputStream fileInputStream = new FileInputStream(image);
