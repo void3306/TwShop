@@ -333,7 +333,7 @@ const api = {
     },
     getCaptcha(){
         return request({
-            url: '/user/captcha',
+            url: '/verify/captcha',
             method: 'get',
         });
     }
