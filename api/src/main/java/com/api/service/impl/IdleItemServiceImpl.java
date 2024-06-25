@@ -57,6 +57,11 @@ public class IdleItemServiceImpl implements IdleItemService {
 
     }
 
+    @Override
+    public int addIdleItem(IdleItem idleItem) {
+        return idleItemMapper.insert(idleItem);
+    }
+
     public PageVo<IdleItemDto> buildIdleItemDtoPageVo(IPage<IdleItem> idleItemPage) {
         List<IdleItem> idleItems = idleItemPage.getRecords();
         long count = idleItemPage.getTotal();

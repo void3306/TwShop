@@ -22,6 +22,10 @@ public class UserSessionUtil {
        return  MESSAGE.get(token);
     }
 
+    public String getCurrentUserCookie(){
+        return "shUserId";
+    }
+
 
 
 }

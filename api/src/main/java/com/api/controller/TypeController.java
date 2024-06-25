@@ -21,4 +21,5 @@ public class TypeController {
     public ResultVo listByCondition(@RequestParam("begin") int begin, @RequestParam("size") int size) {
         return ResultVo.success(typeService.getTypeListByPage(begin, size).getList());
     }
+
 }

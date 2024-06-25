@@ -9,7 +9,7 @@ public enum ErrorMsg {
     COOKIE_ERROR("cookie错误"),
     NO_ACCESS("无权限"),
     USERNAME_OR_PASSWORD_ERROR("用户不存在或密码错误"),
-
+    USER_NOT_LOGIN("用户未登录"),
     CODE_ERROR("验证码错误");
 
     private String msg;

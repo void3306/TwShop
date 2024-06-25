@@ -1,13 +1,19 @@
 package com.api.controller;
 
+import com.api.common.enums.ErrorMsg;
+import com.api.model.dto.IdleItemDto;
+import com.api.model.entity.IdleItem;
 import com.api.model.vo.ResultVo;
 import com.api.service.IdleItemService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.api.session.UserSessionUtil;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @CrossOrigin
 @RestController
@@ -37,6 +43,30 @@ public class IdleItemController {
         if (size == null || size < 0) size = 8;
 
         return ResultVo.success(idleItemService.getIdleItemByLabel(label, page, size));
+    }
+
+    @PostMapping("/add")
+    public ResultVo addIdleItem(@RequestBody IdleItem idleItem,HttpServletResponse response, HttpServletRequest request){
+        for (Cookie cookie : request.getCookies()) {
+            if (cookie.getName().equals("shUserId")) {
+                idleItem.setUserId(Long.parseLong(cookie.getValue()));
+                break;
+            }
+        }
+
+        if (idleItem.getUserId() == null) return ResultVo.fail(ErrorMsg.USER_NOT_LOGIN);
+
+        if (idleItem.getIdleName() == null ||
+            idleItem.getIdlePrice() == null ||
+            idleItem.getIdleLabel() == null ||
+            idleItem.getIdlePlace() == null
+        ) return ResultVo.fail(ErrorMsg.MISSING_PARAMETER);
+
+        idleItem.setReleaseTime(new Date(System.currentTimeMillis()));
+        idleItem.setIdleStatus((byte) 1);
+
+
+        return ResultVo.success(idleItemService.addIdleItem(idleItem));
     }
 
 }
