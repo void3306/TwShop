@@ -27,8 +27,6 @@ public class IdleItemServiceImpl implements IdleItemService {
 
     @Override
     public PageVo<IdleItemDto> getIdleItemByPage(String findValue, Integer page, Integer size) {
-        IPage<IdleItem> idleItemPage = new Page<>(page, size);
-
         QueryWrapper<IdleItem> idleItemQueryWrapper = new QueryWrapper<>();
         idleItemQueryWrapper.and(wrapper ->
                         wrapper.like("idle_name", "%"+findValue+"%")
@@ -36,24 +34,16 @@ public class IdleItemServiceImpl implements IdleItemService {
                                 .like("idle_details", "%"+findValue+"%"))
                 .eq("idle_status", 1)
                 .orderByDesc();
-
-        idleItemMapper.selectPage(idleItemPage, idleItemQueryWrapper);
-
-        return buildIdleItemDtoPageVo(idleItemPage);
+        return buildIdleItemDtoPageVo(idleItemQueryWrapper,page,size);
     }
 
     @Override
     public PageVo<IdleItemDto> getIdleItemByLabel(Integer label, Integer page, Integer size) {
-        IPage<IdleItem> idleItemPage = new Page<>(page, size);
-
         QueryWrapper<IdleItem> idleItemQueryWrapper = new QueryWrapper<>();
         idleItemQueryWrapper.eq("idle_label", label)
                 .eq("idle_status", 1)
                 .orderByDesc();
-
-        idleItemMapper.selectPage(idleItemPage, idleItemQueryWrapper);
-
-        return buildIdleItemDtoPageVo(idleItemPage);
+        return buildIdleItemDtoPageVo(idleItemQueryWrapper,page,size);
 
     }
 
@@ -62,13 +52,14 @@ public class IdleItemServiceImpl implements IdleItemService {
         return idleItemMapper.insert(idleItem);
     }
 
-    public PageVo<IdleItemDto> buildIdleItemDtoPageVo(IPage<IdleItem> idleItemPage) {
-        List<IdleItem> idleItems = idleItemPage.getRecords();
-        long count = idleItemPage.getTotal();
+    public PageVo<IdleItemDto> buildIdleItemDtoPageVo(QueryWrapper<IdleItem> wrapper,Integer page,Integer size) {
+        int count = idleItemMapper.selectCount(wrapper);
+        wrapper.last("limit " + (page - 1) * size + "," + size);
+        List<IdleItem> idleItems = idleItemMapper.selectList(wrapper);
 
         List<IdleItemDto> idleItemDtoList = buildIdleItemDtoList(idleItems);
 
-        return new PageVo<>(idleItemDtoList, (int)count);
+        return new PageVo<>(idleItemDtoList, count);
     }
 
     public List<IdleItemDto> buildIdleItemDtoList(List<IdleItem> idleItems) {

@@ -1,18 +1,14 @@
 package com.api.controller;
 
 import com.api.common.enums.ErrorMsg;
-import com.api.model.dto.IdleItemDto;
 import com.api.model.entity.IdleItem;
 import com.api.model.vo.ResultVo;
 import com.api.service.IdleItemService;
-import com.api.session.UserSessionUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 @CrossOrigin
@@ -46,7 +42,7 @@ public class IdleItemController {
     }
 
     @PostMapping("/add")
-    public ResultVo addIdleItem(@RequestBody IdleItem idleItem,HttpServletResponse response, HttpServletRequest request){
+    public ResultVo addIdleItem(@RequestBody IdleItem idleItem, HttpServletRequest request){
         for (Cookie cookie : request.getCookies()) {
             if (cookie.getName().equals("shUserId")) {
                 idleItem.setUserId(Long.parseLong(cookie.getValue()));
@@ -64,7 +60,6 @@ public class IdleItemController {
 
         idleItem.setReleaseTime(new Date(System.currentTimeMillis()));
         idleItem.setIdleStatus((byte) 1);
-
 
         return ResultVo.success(idleItemService.addIdleItem(idleItem));
     }
