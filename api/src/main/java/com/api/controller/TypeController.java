@@ -19,6 +19,6 @@ public class TypeController {
 
     @RequestMapping("/listByCondition")
     public ResultVo listByCondition(@RequestParam("begin") int begin, @RequestParam("size") int size) {
-        return ResultVo.success(typeService.getTypeListByCondition(begin, size));
+        return ResultVo.success(typeService.getTypeListByPage(begin, size).getList());
     }
 }

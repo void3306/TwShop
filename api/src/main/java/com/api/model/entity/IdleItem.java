@@ -1,5 +1,6 @@
 package com.api.model.entity;
 
+import com.api.model.dto.IdleItemDto;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,20 @@ public class IdleItem implements Serializable {
     private Date releaseTime;
     private Byte idleStatus;
     private Long userId;
-    private User user;
     private static final long serialVersionUID = 1L;
+
+    public IdleItemDto toDto() {
+        IdleItemDto idleItemDto = new IdleItemDto();
+        idleItemDto.setId(this.id);
+        idleItemDto.setIdleName(this.idleName);
+        idleItemDto.setIdleDetails(this.idleDetails);
+        idleItemDto.setPictureList(this.pictureList);
+        idleItemDto.setIdlePrice(this.idlePrice);
+        idleItemDto.setIdlePlace(this.idlePlace);
+        idleItemDto.setIdleLabel(this.idleLabel);
+        idleItemDto.setReleaseTime(this.releaseTime);
+        idleItemDto.setIdleStatus(this.idleStatus);
+        idleItemDto.setUserId(this.userId);
+        return idleItemDto;
+    }
 }

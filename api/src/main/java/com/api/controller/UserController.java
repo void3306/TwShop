@@ -30,7 +30,11 @@ public class UserController {
 
 
     @GetMapping("/login")
-    public ResultVo login(@RequestParam("accountNumber") String username, @RequestParam("userPassword") String password, @RequestParam("code") String code, @RequestParam("token") String token, HttpServletResponse response){
+    public ResultVo login(@RequestParam("accountNumber") String username,
+                          @RequestParam("userPassword") String password,
+                          @RequestParam("code") String code,
+                          @RequestParam("token") String token,
+                          HttpServletResponse response){
         User loginUser = userService.login(username, password);
         if (loginUser == null)
             return ResultVo.fail(ErrorMsg.USERNAME_OR_PASSWORD_ERROR);
