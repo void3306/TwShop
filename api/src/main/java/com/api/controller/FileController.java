@@ -5,7 +5,6 @@ import com.api.model.vo.ResultVo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
@@ -36,7 +35,7 @@ public class FileController {
     }
 
     @PostMapping("/file")
-    public ResultVo uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+    public ResultVo uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         File fileDir = new File(PathUtils.getClassLoadRootPath() + "/images");
         if (!fileDir.exists()){
             fileDir.mkdirs();

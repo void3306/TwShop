@@ -24,9 +24,6 @@ public class VerifyCodeController {
     @Resource
     Producer producer;
 
-    @Resource
-    UserSessionUtil userSessionUtil;
-
     /**
      * 验证码接口
      * @return
@@ -52,7 +49,7 @@ public class VerifyCodeController {
         map.put("token", key);
         System.out.println("set key:" + key);
         System.out.println("set code:" + code);
-        userSessionUtil.addCode(key, code);
+        UserSessionUtil.addCode(key, code);
         return map;
 
     }

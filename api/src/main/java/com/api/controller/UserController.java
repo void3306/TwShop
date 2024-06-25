@@ -19,8 +19,6 @@ public class UserController {
 
     @Resource
     private UserService userService;
-    @Resource
-    private UserSessionUtil userSessionUtil;
 
     @GetMapping("/list")
     public String  userList(){
@@ -38,7 +36,7 @@ public class UserController {
         User loginUser = userService.login(username, password);
         if (loginUser == null)
             return ResultVo.fail(ErrorMsg.USERNAME_OR_PASSWORD_ERROR);
-        if (!code.equals(userSessionUtil.getCode(token)))
+        if (!code.equals(UserSessionUtil.getCode(token)))
             return ResultVo.fail(ErrorMsg.CODE_ERROR);
         Cookie cookie = new Cookie("shUserId",String.valueOf(loginUser.getId()));
 

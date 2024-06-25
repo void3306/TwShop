@@ -4,6 +4,8 @@ import com.api.common.enums.ErrorMsg;
 import com.api.model.entity.IdleItem;
 import com.api.model.vo.ResultVo;
 import com.api.service.IdleItemService;
+import com.api.session.UserSessionUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -43,19 +45,15 @@ public class IdleItemController {
 
     @PostMapping("/add")
     public ResultVo addIdleItem(@RequestBody IdleItem idleItem, HttpServletRequest request){
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("shUserId")) {
-                idleItem.setUserId(Long.parseLong(cookie.getValue()));
-                break;
-            }
-        }
+        idleItem.setUserId(UserSessionUtil.getUid(request));
 
         if (idleItem.getUserId() == null) return ResultVo.fail(ErrorMsg.USER_NOT_LOGIN);
 
         if (idleItem.getIdleName() == null ||
             idleItem.getIdlePrice() == null ||
             idleItem.getIdleLabel() == null ||
-            idleItem.getIdlePlace() == null
+            idleItem.getIdlePlace() == null ||
+            idleItem.getPictureList() == null
         ) return ResultVo.fail(ErrorMsg.MISSING_PARAMETER);
 
         idleItem.setReleaseTime(new Date(System.currentTimeMillis()));
