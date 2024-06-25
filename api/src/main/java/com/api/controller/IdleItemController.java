@@ -21,17 +21,22 @@ public class IdleItemController {
     public ResultVo findByPage(@RequestParam(value = "findValue",required = false) String findValue,
                                @RequestParam(value = "page",required = false) Integer page,
                                @RequestParam(value = "nums",required = false) Integer size) {
-        if (findValue == null)
-            findValue = "";
-
-        if (page == null || page < 0)
-            page = 1;
-
-        if (size == null || size < 0)
-            size = 8;
-
+        if (findValue == null) findValue = "";
+        if (page == null || page < 0) page = 1;
+        if (size == null || size < 0) size = 8;
 
         return ResultVo.success(idleItemService.getIdleItemByPage(findValue, page, size));
+    }
+
+    @RequestMapping("/label")
+    public ResultVo findByLabel(@RequestParam(value = "idleLabel",required = false) Integer label,
+                                @RequestParam(value = "page",required = false) Integer page,
+                                @RequestParam(value = "nums",required = false) Integer size) {
+        if (label == null || label < 0) label = 0;
+        if (page == null || page < 0) page = 1;
+        if (size == null || size < 0) size = 8;
+
+        return ResultVo.success(idleItemService.getIdleItemByLabel(label, page, size));
     }
 
 }

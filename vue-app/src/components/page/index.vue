@@ -100,7 +100,7 @@ export default {
                 background: 'rgba(0, 0, 0, 0)'
             });
             if (this.labelName > 0) {
-                this.$api.findIdleTiemByLable({
+                this.$api.findIdleItemByLabel({
                     idleLabel: this.labelName,
                     page: page,
                     nums: 8

@@ -5,4 +5,6 @@ import com.api.model.vo.PageVo;
 
 public interface IdleItemService {
     PageVo<IdleItemDto> getIdleItemByPage(String findValue, Integer page, Integer size);
+
+    PageVo<IdleItemDto> getIdleItemByLabel(Integer label, Integer page, Integer size);
 }
