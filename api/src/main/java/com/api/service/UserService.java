@@ -2,6 +2,7 @@ package com.api.service;
 
 
 import com.api.model.entity.User;
+import com.api.model.vo.PageVo;
 
 public interface UserService {
 
@@ -21,4 +22,7 @@ public interface UserService {
     User login(String username, String password);
 
 
+    PageVo<User> getUserListByStatus(Integer status, Integer page, Integer size);
+
+    int updateUserStatus(Long userId, Byte status);
 }

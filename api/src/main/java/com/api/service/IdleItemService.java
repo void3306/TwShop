@@ -15,4 +15,5 @@ public interface IdleItemService {
 
     IdleItemDto getIdleItemInfo(Long idleId);
 
+    int updateIdleStatus(Long idleId, Byte status);
 }

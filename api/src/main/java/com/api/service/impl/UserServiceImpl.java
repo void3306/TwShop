@@ -2,11 +2,13 @@ package com.api.service.impl;
 
 import com.api.mapper.UserMapper;
 import com.api.model.entity.User;
+import com.api.model.vo.PageVo;
 import com.api.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @Service
@@ -31,6 +33,24 @@ public class UserServiceImpl implements UserService {
         wrapper.in("account_number", username);
         wrapper.in("user_password", password);
         return userMapper.selectOne(wrapper);
+    }
+
+    @Override
+    public PageVo<User> getUserListByStatus(Integer status, Integer page, Integer size) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_status", status);
+        int count = userMapper.selectCount(wrapper);
+        wrapper.last("limit " + (page - 1) * size + "," + size);
+        List<User> userList = userMapper.selectList(wrapper);
+        return new PageVo<>(userList,count);
+    }
+
+    @Override
+    public int updateUserStatus(Long userId, Byte status) {
+        User user = new User();
+        user.setId(userId);
+        user.setUserStatus(status);
+        return userMapper.updateById(user);
     }
 
 

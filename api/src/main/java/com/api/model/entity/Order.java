@@ -1,5 +1,6 @@
 package com.api.model.entity;
 
+import com.api.model.dto.OrderDto;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,9 +18,7 @@ public class Order implements Serializable {
     private Long id;
     private String orderNumber;
     private Long userId;
-    private User user;
     private Long idleId;
-    private IdleItem idleItem;
     private BigDecimal orderPrice;
     private Byte paymentStatus;
     private String paymentWay;
@@ -29,4 +28,19 @@ public class Order implements Serializable {
     private Byte isDeleted;
     private static final long serialVersionUID = 1L;
 
+    public OrderDto toDto() {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId(this.id);
+        orderDto.setOrderNumber(this.orderNumber);
+        orderDto.setUserId(this.userId);
+        orderDto.setIdleId(this.idleId);
+        orderDto.setOrderPrice(this.orderPrice);
+        orderDto.setPaymentStatus(this.paymentStatus);
+        orderDto.setPaymentWay(this.paymentWay);
+        orderDto.setCreateTime(this.createTime);
+        orderDto.setPaymentTime(this.paymentTime);
+        orderDto.setOrderStatus(this.orderStatus);
+        orderDto.setIsDeleted(this.isDeleted);
+        return orderDto;
+    }
 }

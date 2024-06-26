@@ -1,0 +1,7 @@
+{
+
+  "serverUrl": "http://localhost:9321",
+  "outPath": "src/main/resources/static/doc",
+  "coverOld": true
+}
+

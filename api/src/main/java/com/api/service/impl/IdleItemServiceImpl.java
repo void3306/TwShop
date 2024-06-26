@@ -64,6 +64,13 @@ public class IdleItemServiceImpl implements IdleItemService {
         return buildIdleItemDto(idleItem);
     }
 
+    @Override
+    public int updateIdleStatus(Long idleId, Byte status) {
+        IdleItem idleItem = idleItemMapper.selectById(idleId);
+        idleItem.setIdleStatus(status);
+        return idleItemMapper.updateById(idleItem);
+    }
+
     public PageVo<IdleItemDto> buildIdleItemDtoListPageVo(QueryWrapper<IdleItem> wrapper, Integer page, Integer size) {
         int count = idleItemMapper.selectCount(wrapper);
         wrapper.last("limit " + (page - 1) * size + "," + size);
@@ -96,4 +103,5 @@ public class IdleItemServiceImpl implements IdleItemService {
         idleItemDto.setUser(user);
         return idleItemDto;
     }
+
 }
