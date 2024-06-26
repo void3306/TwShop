@@ -24,13 +24,5 @@ public class UserSessionUtil {
        return  MESSAGE.get(token);
     }
 
-    public static Long getUid(HttpServletRequest request){
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("shUserId")) {
-                return Long.parseLong(cookie.getValue());
-            }
-        }
-        return null;
-    }
 
 }

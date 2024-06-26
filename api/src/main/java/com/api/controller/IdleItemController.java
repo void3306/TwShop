@@ -4,13 +4,9 @@ import com.api.common.enums.ErrorMsg;
 import com.api.model.entity.IdleItem;
 import com.api.model.vo.ResultVo;
 import com.api.service.IdleItemService;
-import com.api.session.UserSessionUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @CrossOrigin
@@ -29,7 +25,7 @@ public class IdleItemController {
         if (page == null || page < 0) page = 1;
         if (size == null || size < 0) size = 8;
 
-        return ResultVo.success(idleItemService.getIdleItemByPage(findValue, page, size));
+        return ResultVo.success(idleItemService.getIdleItemListByFindValue(findValue, page, size));
     }
 
     @RequestMapping("/label")
@@ -40,26 +36,28 @@ public class IdleItemController {
         if (page == null || page < 0) page = 1;
         if (size == null || size < 0) size = 8;
 
-        return ResultVo.success(idleItemService.getIdleItemByLabel(label, page, size));
+        return ResultVo.success(idleItemService.getIdleItemListByLabel(label, page, size));
     }
 
     @PostMapping("/add")
-    public ResultVo addIdleItem(@RequestBody IdleItem idleItem, HttpServletRequest request){
-        idleItem.setUserId(UserSessionUtil.getUid(request));
+    public ResultVo addIdleItem(@RequestBody IdleItem idleItem,@CookieValue("shUserId")String shUserId){
+        if (shUserId == null)
+            return ResultVo.fail(ErrorMsg.USER_NOT_LOGIN);
 
-        if (idleItem.getUserId() == null) return ResultVo.fail(ErrorMsg.USER_NOT_LOGIN);
+        if (idleItem.getIdleName() == null || idleItem.getIdlePrice() == null || idleItem.getIdleLabel() == null || idleItem.getIdlePlace() == null || idleItem.getPictureList() == null)
+            return ResultVo.fail(ErrorMsg.MISSING_PARAMETER);
 
-        if (idleItem.getIdleName() == null ||
-            idleItem.getIdlePrice() == null ||
-            idleItem.getIdleLabel() == null ||
-            idleItem.getIdlePlace() == null ||
-            idleItem.getPictureList() == null
-        ) return ResultVo.fail(ErrorMsg.MISSING_PARAMETER);
-
+        idleItem.setUserId(Long.parseLong(shUserId));
         idleItem.setReleaseTime(new Date(System.currentTimeMillis()));
         idleItem.setIdleStatus((byte) 1);
 
         return ResultVo.success(idleItemService.addIdleItem(idleItem));
+    }
+
+    @RequestMapping("/info")
+    public ResultVo getIdleItemInfo(@RequestParam("idleId") Long idleId){
+        if (idleId == null || idleId < 0) return ResultVo.fail(ErrorMsg.PARAM_ERROR);
+        return ResultVo.success(idleItemService.getIdleItemInfo(idleId));
     }
 
 }
