@@ -17,7 +17,6 @@ public class Message implements Serializable {
     private Long id;
     private Long userId;
     private Long idleId;
-    private IdleItem idle;
     private String content;
     private Date createTime;
     private Long toUser;

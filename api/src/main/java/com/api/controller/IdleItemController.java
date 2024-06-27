@@ -55,9 +55,25 @@ public class IdleItemController {
     }
 
     @RequestMapping("/info")
-    public ResultVo getIdleItemInfo(@RequestParam("idleId") Long idleId){
+    public ResultVo getIdleItemInfo(@RequestParam("id") Long idleId){
         if (idleId == null || idleId < 0) return ResultVo.fail(ErrorMsg.PARAM_ERROR);
         return ResultVo.success(idleItemService.getIdleItemInfo(idleId));
+    }
+
+@RequestMapping("/all")
+    public ResultVo getAllIdleItem(@CookieValue("shUserId") Long shUserId){
+        if (shUserId == null)
+            return ResultVo.fail(ErrorMsg.USER_NOT_LOGIN);
+        return ResultVo.success(idleItemService.getAllIdleItemByUid(shUserId));
+    }
+
+
+    @RequestMapping("/update")
+    public ResultVo updateIdleItem(@RequestBody IdleItem idleItem,@CookieValue("shUserId") Long shUserId){
+        if (idleItem.getId() == null || idleItem.getId() < 0) return ResultVo.fail(ErrorMsg.PARAM_ERROR);
+        if (shUserId == null) return ResultVo.fail(ErrorMsg.USER_NOT_LOGIN);
+        idleItem.setUserId(shUserId);
+        return ResultVo.success(idleItemService.updateIdleItem(idleItem));
     }
 
 }

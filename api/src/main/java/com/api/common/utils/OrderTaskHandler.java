@@ -17,11 +17,11 @@ public class OrderTaskHandler {
                 if(orderService!=null&&delayQueue.size() >0){
                     OrderTask orderTask = delayQueue.poll();
                     if (orderTask != null) {
-//                        if(orderService.updateOrder(orderTask.getOrderModel())){
-//                            System.out.println("成功取消订单："+orderTask.getOrderModel());
-//                        }else {
-//                            System.out.println("取消任务："+orderTask.getOrderModel());
-//                        }
+                        if(orderService.update(orderTask.getOrderModel())){
+                            System.out.println("成功取消订单："+orderTask.getOrderModel());
+                        }else {
+                            System.out.println("取消任务："+orderTask.getOrderModel());
+                        }
 
                     }
                 }

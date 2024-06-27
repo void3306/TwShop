@@ -71,6 +71,20 @@ public class IdleItemServiceImpl implements IdleItemService {
         return idleItemMapper.updateById(idleItem);
     }
 
+    @Override
+    public List<IdleItemDto> getAllIdleItemByUid(Long shUserId) {
+        QueryWrapper<IdleItem> idleItemQueryWrapper = new QueryWrapper<>();
+        idleItemQueryWrapper.eq("user_id", shUserId)
+                .orderByDesc("id");
+        List<IdleItem> idleItems = idleItemMapper.selectList(idleItemQueryWrapper);
+        return buildIdleItemDtoList(idleItems);
+    }
+
+    @Override
+    public boolean updateIdleItem(IdleItem idleItem) {
+        return idleItemMapper.updateById(idleItem) == 1;
+    }
+
     public PageVo<IdleItemDto> buildIdleItemDtoListPageVo(QueryWrapper<IdleItem> wrapper, Integer page, Integer size) {
         int count = idleItemMapper.selectCount(wrapper);
         wrapper.last("limit " + (page - 1) * size + "," + size);
@@ -99,6 +113,7 @@ public class IdleItemServiceImpl implements IdleItemService {
     public IdleItemDto buildIdleItemDto(IdleItem idleItem, QueryWrapper<User> userQueryWrapper) {
         userQueryWrapper.eq("id", idleItem.getUserId());
         User user = userMapper.selectOne(userQueryWrapper);
+        user.setUserPassword(null);
         IdleItemDto idleItemDto = idleItem.toDto();
         idleItemDto.setUser(user);
         return idleItemDto;

@@ -4,6 +4,8 @@ import com.api.model.dto.IdleItemDto;
 import com.api.model.entity.IdleItem;
 import com.api.model.vo.PageVo;
 
+import java.util.List;
+
 public interface IdleItemService {
     PageVo<IdleItemDto> getIdleItemListByFindValue(String findValue, Integer page, Integer size);
 
@@ -16,4 +18,8 @@ public interface IdleItemService {
     IdleItemDto getIdleItemInfo(Long idleId);
 
     int updateIdleStatus(Long idleId, Byte status);
+
+    List<IdleItemDto> getAllIdleItemByUid(Long shUserId);
+
+    boolean updateIdleItem(IdleItem idleItem);
 }

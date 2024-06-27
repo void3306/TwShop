@@ -38,7 +38,7 @@ public class AdminController {
         return ResultVo.success(loginAdmin);
     }
 
-    @GetMapping("logout")
+    @GetMapping("logOut")
     public ResultVo logout(HttpSession session) {
         session.removeAttribute("admin");
         return ResultVo.success();

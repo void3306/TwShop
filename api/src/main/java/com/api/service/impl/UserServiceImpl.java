@@ -53,5 +53,26 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateById(user);
     }
 
+    @Override
+    public boolean add(User user) {
+        return userMapper.insert(user) == 1;
+    }
+
+    @Override
+    public boolean update(User user) {
+        return userMapper.updateById(user) == 1;
+    }
+
+    @Override
+    public boolean updatePassword(String newPassword, String oldPassword, Long shUserId) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("id", shUserId);
+        wrapper.eq("user_password", oldPassword);
+        User user = userMapper.selectOne(wrapper);
+        if (user == null) return false;
+        user.setUserPassword(newPassword);
+        return userMapper.updateById(user) == 1;
+    }
+
 
 }

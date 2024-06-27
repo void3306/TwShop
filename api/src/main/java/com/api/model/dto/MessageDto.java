@@ -1,5 +1,6 @@
 package com.api.model.dto;
 
+import com.api.model.entity.IdleItem;
 import com.api.model.entity.Message;
 import com.api.model.entity.User;
 import lombok.AllArgsConstructor;
@@ -12,8 +13,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageDto extends Message implements Serializable {
-    private User fromU;
-    private User toU;
-    private Message toM;
+    private User fromUser;
+    private IdleItem idle;
+    private User toUserEntity;
+    private MessageDto toMessageDto;
 
 }

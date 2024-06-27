@@ -25,4 +25,10 @@ public interface UserService {
     PageVo<User> getUserListByStatus(Integer status, Integer page, Integer size);
 
     int updateUserStatus(Long userId, Byte status);
+
+    boolean add(User user);
+
+    boolean update(User user);
+
+    boolean updatePassword(String newPassword, String oldPassword, Long shUserId);
 }

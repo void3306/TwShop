@@ -40,7 +40,7 @@ public class FileController {
 
     @PostMapping("/file")
     public ResultVo uploadFile(@RequestParam("file") MultipartFile file) {
-        File fileDir = new File(uploadPath + "/images");
+        File fileDir = new File(uploadPath + "/" +"images");
         if (!fileDir.exists()){
             fileDir.mkdirs();
         }
